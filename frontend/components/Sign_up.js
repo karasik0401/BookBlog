@@ -34,7 +34,7 @@ export default function App() {
         errorPassword && setErrorPassword("");
 
         checkValid() &&
-      registerUser(userData.email, userData.password)
+      registerUser(userData.email, userData.email, userData.email, userData.password)
         .then((res) => {
           if (res && res.email) {
             history.push("/signin", {from: "/signup"});
@@ -49,7 +49,7 @@ export default function App() {
 
         <TextInput
         style={styles.Login}
-        onChangeText={onChangeInput}
+        onChange={onChangeInput}
         placeholder="Логин"
         name = "login"
         type="text"
@@ -57,21 +57,21 @@ export default function App() {
         />
         <TextInput
         style={styles.Mail}
-        onChangeText={onChangeInput}
+        onChange={onChangeInput}
         placeholder="Почта"
         name = "email"
         id = {2}
         />
         <TextInput
         style={styles.Mail}
-        onChangeText={onChangeInput}
+        onChange={onChangeInput}
         placeholder="Пароль"
         name = "password"
         id = {3}
         />
         <TextInput
         style={styles.Mail}
-        onChangeText={onChangeInput}
+        onChange={onChangeInput}
         placeholder="Пароль еще раз"
         id = {4}
         name = "password_again"
