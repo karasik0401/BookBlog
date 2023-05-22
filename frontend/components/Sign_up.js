@@ -39,7 +39,7 @@ function Sign_up(props) {
       errorLogin && setErrorLogin("");
     errorPassword && setErrorPassword("");
 
-    checkValid() &&
+        checkValid() &&
       registerUser(userData.email, userData.password)
         .then((res) => {
           if (res && res.email) {
