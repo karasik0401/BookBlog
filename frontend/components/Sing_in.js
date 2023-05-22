@@ -6,14 +6,12 @@ import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, } from 'reac
 
 
 
-function Sign_up(props) {
-  
+function Sign_in(props) {
+
     const { navigation } = props
     const [userData, setUserData] = React.useState({});
     const [errorPassword, setErrorPassword] = React.useState("");
     const [errorLogin, setErrorLogin] = React.useState("");
-
-
 
     const onChangeInput = (e) => {
         setUserData({
@@ -25,22 +23,22 @@ function Sign_up(props) {
       
       const checkValid = () => {
         if (!userData.email) {
-          Alert.alert("Поле с почтой является обязательным");
+          setErrorLogin("Поле с почтой является обязательным");
           return false;
         }
         if (!userData.password) {
-          Alert.alert("Поле с паролем является обязательным");
+          setErrorPassword("Поле с паролем является обязательным");
           return false;
         }
         return true;
       };
 
     const handleSubmit = () => {
-      errorLogin && setErrorLogin("");
-    errorPassword && setErrorPassword("");
+        errorLogin && setErrorLogin("");
+        errorPassword && setErrorPassword("");
 
-    checkValid() &&
-      registerUser(userData.email, userData.password)
+        checkValid() &&
+        registerUser(userData.email, userData.password)
         .then((res) => {
           if (res && res.email) {
             history.push("/signin", {from: "/signup"});
@@ -60,7 +58,7 @@ function Sign_up(props) {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.text}>Регистрация</Text>
+        <Text style={styles.text}>Авторизация</Text>
 
         <TextInput
         style={styles.Login}
@@ -70,14 +68,7 @@ function Sign_up(props) {
         type="text"
         id = {1}
         />
-        <TextInput
-        style={styles.Mail}
-        onChange={onChangeInput}
-        placeholder="Почта"
-        name = "email"
-        id = {2}
-        error={errorLogin}
-        />
+        
         <TextInput
         style={styles.Mail}
         onChange={onChangeInput}
@@ -86,16 +77,10 @@ function Sign_up(props) {
         id = {3}
         error={errorPassword}
         />
-        <TextInput
-        style={styles.Mail}
-        onChange={onChangeInput}
-        placeholder="Пароль еще раз"
-        id = {4}
-        name = "password_again"
-        />
+        
 
-        <Pressable style={styles.btn} onPress={() => onSubmit(handleSubmit)}>
-          <Text style={styles.btn_text}>Зарегистрироваться</Text>
+        <Pressable style={styles.btn} onPress={() => handleSubmit}>
+          <Text style={styles.btn_text}>Войти</Text>
         </Pressable>
 
         <View style={styles.lines}>
@@ -105,14 +90,13 @@ function Sign_up(props) {
         </View>
 
         <View style={styles.footer}>
-            <Text style={styles.footer_text}>Уже есть аккаунт?</Text>
+            <Text style={styles.footer_text}>Нет аккаунта?</Text>
             <View style={styles.footer_btn}>
-              <Button 
-              title="Войти"
+              <Button
+              title="Зарегистрироваться"
               color="#f9b924"
-              size="sm"
-              onPress={() => navigation.navigate('Sign_in')}
-            />
+              onPress={() => navigation.navigate('Sign_up')}
+            />  
             </View>
             
         </View>
@@ -129,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     
-  },
+  }, 
   text: {
     fontSize: 32,
     color: '#f9b924',
@@ -192,7 +176,7 @@ const styles = StyleSheet.create({
   },
   footer_text:{
     fontSize: 14,
-    color: '#A3A6AA',
+    color: '#A3A6AA'
   },
   footer_btn:{
     marginTop: -11,
@@ -201,5 +185,4 @@ const styles = StyleSheet.create({
 
 })
 
-
-export default Sign_up
+export default Sign_in
