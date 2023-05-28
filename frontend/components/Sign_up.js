@@ -6,24 +6,42 @@ import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, } from 'reac
 
 
 
+
+
 function Sign_up(props) {
   
     const { navigation } = props
     const [userData, setUserData] = React.useState({});
-    const [errorPassword, setErrorPassword] = React.useState("");
-    const [errorLogin, setErrorLogin] = React.useState("");
+
+    const checkResponse = (res) => {
+      if (res.ok) {
+        return (res);
+      }
+      return res.json().then((err) => Promise.reject(err));
+    };
 
 
+    const registerUser = (username, email, password, re_password) => {
+      return fetch('http://192.168.1.246:8000/api/v1/users/', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password, re_password }),
+      }).then(checkResponse);
+    };
 
-    const onChangeInput = (e) => {
+    const onChangeInput = (e, name) => {
         setUserData({
           ...userData,
-          [e.target.name]: e.target.value,
+          [name]: e.nativeEvent.text,
         });
       };
 
       
       const checkValid = () => {
+        if (!userData.login) {
+          Alert.alert("Поле с логином является обязательным");
+          return false;
+        }
         if (!userData.email) {
           Alert.alert("Поле с почтой является обязательным");
           return false;
@@ -32,69 +50,79 @@ function Sign_up(props) {
           Alert.alert("Поле с паролем является обязательным");
           return false;
         }
+        if (!userData.re_password) {
+          Alert.alert("Поле с повторным вводом пароля является обязательным");
+          return false;
+        }
         return true;
       };
 
     const handleSubmit = () => {
-      errorLogin && setErrorLogin("");
-    errorPassword && setErrorPassword("");
-
-        checkValid() &&
-      registerUser(userData.email, userData.password)
-        .then((res) => {
-          if (res && res.email) {
-            history.push("/signin", {from: "/signup"});
+      checkValid()&&
+      registerUser(userData.login, userData.email, userData.password, userData.re_password)
+        .then((res) =>  {
+          if (res.status === 201) {
+            navigation.navigate('Sign_in');
           }
         })
         .catch((err) => {
-          if (typeof err.email === "object") {
-            setErrorLogin("Пользователь с такой почтой уже зарегистрирован");
-          } else if (typeof err.password === "object") {
-            setErrorPassword(
-              "Пароль должен содержать минимум 8 символов и не состоять полностью из цифр"
-            );
+          console.log(err)
+          if (err.non_field_errors){
+            Alert.alert("Пароли не совпадают");
+          }
+          else if (err.password){
+            Alert.alert("Пароль слишком простой");
+          }
+          else if (err.username){
+            if (err.username[0] === "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters.")
+              Alert.alert("Введите коректный логин. Он может содержать только буквы, цифры, и @/./+/-/_");
+            else {
+              Alert.alert("Пользователь с таким логином уже существует");
+            }
+          }
+          else if (err.email){
+            Alert.alert("Клиент с такой почтой уже существует");
           }
         });
     
       };
-
+  
   return (
     <View style={styles.container}>
-        <Text style={styles.text}>Регистрация</Text>
+        <Text style={styles.text}></Text>
 
         <TextInput
         style={styles.Login}
-        onChange={onChangeInput}
+        onChange={e => onChangeInput(e, 'login')}
         placeholder="Логин"
-        name = "login"
         type="text"
         id = {1}
         />
         <TextInput
         style={styles.Mail}
-        onChange={onChangeInput}
+        onChange={e => onChangeInput(e, 'email')}
         placeholder="Почта"
-        name = "email"
         id = {2}
-        error={errorLogin}
+        type='text'
+        keyboardType='email-address'
         />
         <TextInput
         style={styles.Mail}
-        onChange={onChangeInput}
+        onChange={e => onChangeInput(e, 'password')}
         placeholder="Пароль"
-        name = "password"
         id = {3}
-        error={errorPassword}
+        type="text"
         />
         <TextInput
         style={styles.Mail}
-        onChange={onChangeInput}
+        onChange={e => onChangeInput(e, 're_password')}
         placeholder="Пароль еще раз"
+        type="text"
         id = {4}
-        name = "password_again"
         />
+        
 
-        <Pressable style={styles.btn} onPress={() => onSubmit(handleSubmit)}>
+        <Pressable style={styles.btn} onPress={handleSubmit}>
           <Text style={styles.btn_text}>Зарегистрироваться</Text>
         </Pressable>
 

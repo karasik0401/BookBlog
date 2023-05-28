@@ -13,7 +13,7 @@ function MainStackNavigator() {
       <Stack.Navigator
         headerMode='float'>
         <Stack.Screen
-          name='Sign_up'
+          name='регистрация'
           component={Sign_up}
         />
         <Stack.Screen
