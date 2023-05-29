@@ -13,13 +13,13 @@ function MainStackNavigator() {
       <Stack.Navigator
         headerMode='float'>
         <Stack.Screen
-          name='регистрация'
-          component={Sign_up}
-        />
-        <Stack.Screen
-          name='Sign_in'
+          name='Авторизация'
           component={Sign_in}
           
+        />
+        <Stack.Screen
+          name='Регистрация'
+          component={Sign_up}
         />
       </Stack.Navigator>
     </NavigationContainer>

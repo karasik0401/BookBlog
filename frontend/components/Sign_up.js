@@ -5,14 +5,10 @@ import { useHistory } from "react-dom";
 import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, } from 'react-native';
 
 
-
-
-
 function Sign_up(props) {
   
     const { navigation } = props
     const [userData, setUserData] = React.useState({});
-
     const checkResponse = (res) => {
       if (res.ok) {
         return (res);
@@ -62,7 +58,7 @@ function Sign_up(props) {
       registerUser(userData.login, userData.email, userData.password, userData.re_password)
         .then((res) =>  {
           if (res.status === 201) {
-            navigation.navigate('Sign_in');
+            navigation.navigate('Авторизация');
           }
         })
         .catch((err) => {
@@ -89,7 +85,7 @@ function Sign_up(props) {
   
   return (
     <View style={styles.container}>
-        <Text style={styles.text}></Text>
+        <Text style={styles.text}>Регистрация</Text>
 
         <TextInput
         style={styles.Login}
@@ -139,7 +135,7 @@ function Sign_up(props) {
               title="Войти"
               color="#f9b924"
               size="sm"
-              onPress={() => navigation.navigate('Sign_in')}
+              onPress={() => navigation.navigate('Авторизация')}
             />
             </View>
             
