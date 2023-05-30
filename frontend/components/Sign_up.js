@@ -135,7 +135,7 @@ function Sign_up(props) {
               title="Войти"
               color="#f9b924"
               size="sm"
-              onPress={() => navigation.navigate('Авторизация')}
+              onPress={() => navigation.navigate('Sign_in')}
             />
             </View>
             

@@ -106,7 +106,7 @@ function Sign_in(props) {
               <Button
               title="Зарегистрироваться"
               color="#f9b924"
-              onPress={() => navigation.navigate('Регистрация')}
+              onPress={() => navigation.navigate('MainPage')}
             />  
             </View>
             
