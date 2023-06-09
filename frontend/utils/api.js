@@ -16,3 +16,14 @@ export const registerUser = (email, password) => {
     body: JSON.stringify({ email, password }),
   }).then(checkResponse);
 };
+
+
+export const getUser = () => {
+  return fetch(`${API_URL}/api/v1/users/me/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Token ${localStorage.getItem("auth_token")}`,
+    },
+  }).then(checkResponse);
+};
