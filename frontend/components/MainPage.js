@@ -7,11 +7,8 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  Pressable,
-  Alert,
-  SafeAreaView,
-  ActivityIndicator, FlatList, Image, TouchableOpacity,
+  Button, 
+  SafeAreaView, FlatList, Image, TouchableOpacity,
 } from 'react-native';
 
 function MainPage(props) {
@@ -73,25 +70,34 @@ function MainPage(props) {
                    value={searchQuery} onChangeText={(query) => handleSearch(query)}/>
       </SafeAreaView>
 
-      <FlatList style={styles.list}
-            data={data}
-            keyExtractor={(item) => item.login.username}
-            renderItem={({item}) => (
-                <TouchableOpacity style={styles.items} onPress={() => navigation.navigate('PostPage', item)}>
-                  <View style={styles.header}>
-                    <Image style={styles.item_img} source={{uri: item.picture.thumbnail}}/>
-                    <View style={styles.header_colum}>
-                      <Text style={styles.item_user}> {item.name.first}</Text>
-                      <Text style={styles.item_data}> {item.name.last}</Text>
+      <Button 
+              title="в профиль"
+              color="#f9b924"
+              size="sm"
+              onPress={() => navigation.navigate('Profile')}
+            />
+
+
+        <FlatList style={styles.list}
+              data={data}
+              keyExtractor={(item) => item.login.username}
+              renderItem={({item}) => (
+                  <TouchableOpacity style={styles.items} onPress={() => navigation.navigate('PostPage', item)}>
+                    <View style={styles.header}>
+                      <Image style={styles.item_img} source={{uri: item.picture.thumbnail}}/>
+                      <View style={styles.header_colum}>
+                        <Text style={styles.item_user}> {item.name.first}</Text>
+                        <Text style={styles.item_data}> {item.name.last}</Text>
+                      </View>
                     </View>
-                  </View>
 
-                    <Image style={styles.post_img} source={{uri: item.picture.thumbnail}}/>
+                      <Image style={styles.post_img} source={{uri: item.picture.thumbnail}}/>
 
-                    <Text style={styles.item_text}> {item.email}</Text>
+                      <Text style={styles.item_text}> {item.email}</Text>
 
-                </TouchableOpacity>)}
-      />
+                  </TouchableOpacity>)}
+        />
+
     </View>
 
   );
@@ -99,13 +105,16 @@ function MainPage(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#F6F6F6',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
 
   },
-
+  body:{
+    width: 390,
+  },
   search:{
     width:358,
     height:32,

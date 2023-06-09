@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useHistory } from "react-dom";
+import {API_URL} from "@env";
 
-import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, } from 'react-native';
+import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, ScrollView } from 'react-native';
 
 
 function Sign_up(props) {
+  URL = API_URL
   
     const { navigation } = props
     const [userData, setUserData] = React.useState({});
@@ -18,7 +20,7 @@ function Sign_up(props) {
 
 
     const registerUser = (username, email, password, re_password) => {
-      return fetch('http://192.168.1.246:8000/api/v1/users/', {
+      return fetch(`${URL}/api/v1/users/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password, re_password }),
@@ -58,7 +60,7 @@ function Sign_up(props) {
       registerUser(userData.login, userData.email, userData.password, userData.re_password)
         .then((res) =>  {
           if (res.status === 201) {
-            navigation.navigate('Авторизация');
+            navigation.navigate('MainPage');
           }
         })
         .catch((err) => {
@@ -153,6 +155,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     
+  },
+  body:{
+    width: 390,
   },
   text: {
     fontSize: 32,

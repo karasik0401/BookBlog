@@ -1,16 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useHistory } from "react-dom";
+import {API_URL} from '@env'
 
-import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, } from 'react-native';
+import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, ScrollView} from 'react-native';
 
 
 
 function Sign_in(props) {
+  URL=API_URL
 
     const { navigation } = props
     const [userData, setUserData] = React.useState({});
-    let auth_token = ''
 
     const checkResponse = (res) => {
       if (res.ok) {
@@ -20,7 +21,7 @@ function Sign_in(props) {
     };
 
     const loginUser = (username, password) => {
-      return fetch(`http://192.168.1.246:8000/api/v1/auth/token/login/`, {
+      return fetch(`${URL}/api/v1/auth/token/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -60,7 +61,7 @@ function Sign_in(props) {
         loginUser(userData.username, userData.password)
         .then((res) => {
           if (res) {
-            Alert.alert("Успех")
+            navigation.navigate('MainPage')
           }
         })
         .catch((err) => {
@@ -72,6 +73,7 @@ function Sign_in(props) {
 
   return (
     <View style={styles.container}>
+
         <Text style={styles.text}>Авторизация</Text>
 
         <TextInput
@@ -84,6 +86,7 @@ function Sign_in(props) {
         
         <TextInput
         style={styles.Mail}
+        secureTextEntry={true}
         onChange={e => onChangeInput(e, "password")}
         placeholder="Пароль"
         id = {2}
@@ -124,7 +127,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     
-  }, 
+  },
+  body:{
+    width: 390,
+  },
   text: {
     fontSize: 32,
     color: '#f9b924',

@@ -5,13 +5,7 @@ import filter from 'lodash.filter'
 import {
   StyleSheet,
   Text,
-  View,
-  TextInput,
-  Button,
-  Pressable,
-  Alert,
-  SafeAreaView,
-  ActivityIndicator, FlatList, Image, TouchableOpacity,
+  View, ScrollView, Image, 
 } from 'react-native';
 
 function PostPage({ route }) {
@@ -20,19 +14,20 @@ function PostPage({ route }) {
 
   return (
     <View style={styles.container}>
+
       
+    <ScrollView style={styles.body}>
 
       <View style={styles.post}>
 
         <View style={styles.header}>
             <Image style={styles.post_user_img} source={{uri: route.params.picture.thumbnail}}/>
             <View style={styles.header_col}>
-            <Text style={styles.item_user}>{route.params.name.first}</Text>
-            <Text style={styles.item_data}>{route.params.name.last}</Text>
+              <Text style={styles.item_user}>{route.params.name.first}</Text>
+              <Text style={styles.item_data}>{route.params.name.last}</Text>
+            </View>
         </View>
-        </View>
-      <Image style={styles.post_img} source={{uri: route.params.picture.thumbnail}}/>
-
+        <Image style={styles.post_img} source={{uri: route.params.picture.thumbnail}}/>
         <Text style={styles.text}>{route.params.email}</Text>
       </View>
 
@@ -49,7 +44,9 @@ function PostPage({ route }) {
             </View>
         </View>
         <Text style={styles.text_com}>{route.params.email}</Text>
-        </View>
+      </View>
+
+    </ScrollView>
       
     </View>
   );
@@ -66,7 +63,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
 
   },
-
+  body:{
+    width: 390,
+  },
   post:{
     marginTop: 8,
   },

@@ -1,46 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useHistory } from "react-dom";
+import {API_URL} from "@env";
+import "./Sing_in.js";
+
 
 import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, } from 'react-native';
 
 
 
 function Profile(props) {
+  URL = API_URL;
 
-    const { navigation } = props
+    const { navigation } = props;
       
     const [userState, setUserState] = React.useState({});
 
+    const checkResponse = (res) => {
+      if (res.ok) {
+        return (res.json());
+      }
+      return res.json().then((err) => Promise.reject(err));
+    };
+
     const getUser = () => {
-        return fetch(`http://192.168.1.246:8000/api/v1/users/me/`, {
+        return fetch(`${URL}/api/v1/users/me/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            authorization: `Token ${localStorage.getItem("auth_token")}`,
+            authorization: `Token ${auth_token}`,
           },
-        }).then(checkResponse);
+        }).then(checkResponse)
+        .then((res) => setUserState(res))
       };
 
     React.useEffect(() => {
-        const token = localStorage.getItem("auth_token");
+        const token = auth_token;
         if (token) {
-        getUser().then((res) => {
-            if (res && res.id) {
-            setUserState({ id: res.id, username: res.username, email: res.email});
-            }
-        });
+        getUser();
         }
     }, []);
 
   return (
     <View style={styles.container}>
-        <View style={styles.login}>{userState.username}</View>
+        <Text style={styles.login}>{userState.username}</Text>
 
-        <View style={styles.email}>{userState.email}</View>
+        <Text style={styles.email}>{userState.email}</Text>
 
         <Pressable style={styles.btn} onPress={() => navigation.navigate('Sign_in')}>
-        <Text style={styles.btn_text}>Выйти</Text>
+          <Text style={styles.btn_text}>Выйти</Text>
         </Pressable>
  
     </View>

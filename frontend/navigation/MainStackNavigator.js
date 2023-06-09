@@ -6,6 +6,7 @@ import Sign_up from '../components/Sign_up'
 import Sign_in from '../components/Sing_in'
 import MainPage from '../components/MainPage'
 import PostPage from '../components/PostPge'
+import Profile from '../components/Profile'
 
 const Stack = createStackNavigator()
 
@@ -43,6 +44,18 @@ function MainStackNavigator() {
           name='PostPage'
           component={PostPage}
           options={{title: 'Обсуждение',
+            headerStyle: {
+            backgroundColor: '#F9B924'},
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+              fontWeight: 'bold',
+                fontSize: 20,
+          },}}
+          />
+          <Stack.Screen
+          name='Profile'
+          component={Profile}
+          options={{title: 'Профиль',
             headerStyle: {
             backgroundColor: '#F9B924'},
               headerTintColor: '#fff',
