@@ -16,7 +16,7 @@ import {
   SafeAreaView, FlatList, Image, TouchableOpacity,
 } from 'react-native';
 
-function MainPage(props) {
+function HumanPosts(props) {
 
   URL = API_URL;
 
@@ -63,7 +63,7 @@ function MainPage(props) {
 
     const isFocused = useIsFocused();
     React.useEffect(() => {
-        fetchData(API_ENDPOINT);
+        fetchData(`${API_ENDPOINT}/?author=${props.route.params}`);
         
     }, [isFocused]);
 
@@ -232,4 +232,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default MainPage
+export default HumanPosts

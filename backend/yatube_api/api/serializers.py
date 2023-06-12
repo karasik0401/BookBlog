@@ -39,7 +39,7 @@ class CustomUserSerializer(UserSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = SlugRelatedField(slug_field='username', read_only=True)
+    author = CustomUserSerializer(read_only = True)
 
     class Meta:
         fields = '__all__'

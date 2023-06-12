@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from "react-dom";
 import {API_URL} from "@env";
 
-import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 
 function Sign_up(props) {
@@ -60,7 +60,7 @@ function Sign_up(props) {
       registerUser(userData.login, userData.email, userData.password, userData.re_password)
         .then((res) =>  {
           if (res.status === 201) {
-            navigation.navigate('MainPage');
+            navigation.navigate('Profile');
           }
         })
         .catch((err) => {
@@ -86,80 +86,89 @@ function Sign_up(props) {
       };
   
   return (
-    <View style={styles.container}>
-        <Text style={styles.text}>Регистрация</Text>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Text style={styles.text}>Регистрация</Text>
 
-        <TextInput
-        style={styles.Login}
-        onChange={e => onChangeInput(e, 'login')}
-        placeholder="Логин"
-        type="text"
-        id = {1}
-        />
-        <TextInput
-        style={styles.Mail}
-        onChange={e => onChangeInput(e, 'email')}
-        placeholder="Почта"
-        id = {2}
-        type='text'
-        keyboardType='email-address'
-        />
-        <TextInput
-        style={styles.Mail}
-        onChange={e => onChangeInput(e, 'password')}
-        placeholder="Пароль"
-        id = {3}
-        type="text"
-        />
-        <TextInput
-        style={styles.Mail}
-        onChange={e => onChangeInput(e, 're_password')}
-        placeholder="Пароль еще раз"
-        type="text"
-        id = {4}
-        />
-        
-
-        <Pressable style={styles.btn} onPress={handleSubmit}>
-          <Text style={styles.btn_text}>Зарегистрироваться</Text>
-        </Pressable>
-
-        <View style={styles.lines}>
-            <View style={styles.left_lines}></View>
-            <Text>или</Text>
-            <View style={styles.right_lines}></View>
-        </View>
-
-        <View style={styles.footer}>
-            <Text style={styles.footer_text}>Уже есть аккаунт?</Text>
-            <View style={styles.footer_btn}>
-              <Button 
-              title="Войти"
-              color="#f9b924"
-              size="sm"
-              onPress={() => navigation.navigate('Sign_in')}
+          <View>
+            <TextInput
+              style={styles.Login}
+              onChange={e => onChangeInput(e, 'login')}
+              placeholder="Логин"
+              type="text"
+              id = {1}
             />
+            <TextInput
+              style={styles.Mail}
+              onChange={e => onChangeInput(e, 'email')}
+              placeholder="Почта"
+              id = {2}
+              type='text'
+              keyboardType='email-address'
+            />
+            <TextInput
+              style={styles.Mail}
+              secureTextEntry={true}
+              textContentType={'password'}
+              onChange={e => onChangeInput(e, 'password')}
+              placeholder="Пароль"
+              id = {3}
+            />
+            <TextInput
+              style={styles.Mail}
+              secureTextEntry={true}
+              textContentType={'password'}
+              onChange={e => onChangeInput(e, 're_password')}
+              placeholder="Пароль еще раз"
+              id = {4}
+            />
+            <View style={styles.btnContainer}>
+              <Pressable style={styles.btn} onPress={handleSubmit}>
+                <Text style={styles.btn_text}>Зарегистрироваться</Text>
+              </Pressable>
+
+              <View style={styles.lines}>
+                <View style={styles.left_lines}></View>
+                <Text>или</Text>
+                <View style={styles.right_lines}></View>
+              </View>
+
+              <View style={styles.footer}>
+                <Text style={styles.footer_text}>Уже есть аккаунт?</Text>
+                <View style={styles.footer_btn}>
+                  <Button 
+                    title="Войти"
+                    color="#f9b924"
+                    size="sm"
+                    onPress={() => navigation.navigate('Sign_in')}
+                  />
+                </View>
+              </View>
             </View>
-            
+          </View>
         </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
  
-    </View>
+
+    
 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 844,
     
   },
-  body:{
-    width: 390,
-  },
   text: {
+    marginTop: -130,
     fontSize: 32,
     color: '#f9b924',
   },
@@ -188,7 +197,8 @@ const styles = StyleSheet.create({
     width: 318,
     height: 52,
     borderRadius: 10,
-    backgroundColor: '#f9b924',   
+    backgroundColor: '#f9b924',
+    marginLeft:12   
   },
   btn_text:{
     fontSize: 20,
@@ -197,7 +207,7 @@ const styles = StyleSheet.create({
   },
   lines:{
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginTop: 17,
   },
   left_lines: {
@@ -216,7 +226,7 @@ const styles = StyleSheet.create({
   },
   footer:{
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginTop: 17,
   },
   footer_text:{

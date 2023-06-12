@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from "react-dom";
 import {API_URL} from '@env'
 
-import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TextInput,Button,Pressable, Alert, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 
 
 
@@ -72,10 +72,12 @@ function Sign_in(props) {
       };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
 
         <Text style={styles.text}>Авторизация</Text>
-
+        <View>
         <TextInput
         style={styles.Login}
         onChange={e => onChangeInput(e, "username")}
@@ -92,7 +94,7 @@ function Sign_in(props) {
         id = {2}
         />
         
-
+        <View style={styles.btnContainer}>
         <Pressable style={styles.btn} onPress={handleSubmit}>
           <Text style={styles.btn_text}>Войти</Text>
         </Pressable>
@@ -114,24 +116,30 @@ function Sign_in(props) {
             </View>
             
         </View>
- 
-    </View>
+        </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 844,
     
   },
   body:{
     width: 390,
   },
   text: {
+    marginTop: -100,
     fontSize: 32,
     color: '#f9b924',
   },
@@ -160,7 +168,8 @@ const styles = StyleSheet.create({
     width: 318,
     height: 52,
     borderRadius: 10,
-    backgroundColor: '#f9b924',   
+    backgroundColor: '#f9b924',
+    marginLeft:12    
   },
   btn_text:{
     fontSize: 20,
@@ -169,7 +178,7 @@ const styles = StyleSheet.create({
   },
   lines:{
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginTop: 17,
   },
   left_lines: {
@@ -188,8 +197,9 @@ const styles = StyleSheet.create({
   },
   footer:{
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginTop: 17,
+    marginLeft:12  
   },
   footer_text:{
     fontSize: 14,

@@ -3,6 +3,7 @@ from django.db import models
 from users.models import CustomUser
 
 class Post(models.Model):
+    title = models.TextField()
     text = models.TextField()
     pub_date = models.DateTimeField(
         'Дата публикации',
@@ -17,6 +18,9 @@ class Post(models.Model):
         upload_to='posts/',
         null=True,
         blank=True
+    )
+    comment_count = models.IntegerField(
+        default=0,
     )
 
     def __str__(self):

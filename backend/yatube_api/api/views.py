@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework import mixins
@@ -12,6 +13,7 @@ from .serializers import (
 )
 from .permissions import IsAuthorOrReadOnly
 from posts.models import Post
+from .filters import PostFilter
 
 
 class GetAndPostViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
@@ -56,6 +58,8 @@ class CustomUserViewSet(UserViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    filterset_class = PostFilter
+    filter_backends = (DjangoFilterBackend,)
     permission_classes = [IsAuthorOrReadOnly]
     pagination_class = LimitOffsetPagination
 
@@ -71,6 +75,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         return get_object_or_404(Post, id=self.kwargs.get('post_id'))
 
     def perform_create(self, serializer):
+        post = Post.objects.get(id=self.kwargs.get('post_id'))
+        post.comment_count = post.comment_count + 1
+        post.save()
         serializer.save(author=self.request.user, post=self.get_post())
 
     def get_queryset(self):
