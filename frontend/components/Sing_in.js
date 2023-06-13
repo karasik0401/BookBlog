@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     width: 390,
   },
   text: {
-    marginTop: -100,
+    marginTop: -45,
     fontSize: 32,
     color: '#f9b924',
   },

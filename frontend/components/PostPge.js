@@ -66,6 +66,7 @@ function PostPage({ route }) {
       },
       body: JSON.stringify( { text } ),
     }).then((res) => {
+      userData.text = '';
       if(res.status === 201) {
         userData.text = '';
         return {status: true};
@@ -120,15 +121,19 @@ function PostPage({ route }) {
         <View style={styles.header}>
             <Image style={styles.post_user_img} source={{uri: author.photo}}/>
             <View style={styles.header_col}>
-              <Text style={styles.item_user}>{author.username}</Text>
-              <Text style={styles.item_data}>{data.pub_date}</Text>
+              <Text style={styles.item_user_header}>{author.username}</Text>
+              <Text style={styles.item_data_header}>{data.pub_date}</Text>
             </View>
         </View>
         {data.image ?
         <Image style={styles.post_img} source={{uri: data.image}}/>:
         null}
-        <Text style={styles.title}>{data.title}</Text>
-        <Text style={styles.text}>{data.text}</Text>
+
+        <View style={styles.rec_one}>
+          <Text style={styles.title}>{data.title}</Text>
+          <Text style={styles.text}>{data.text}</Text>          
+        </View>
+
       </View>
 
       <View style={styles.line}></View>
@@ -140,13 +145,15 @@ function PostPage({ route }) {
               renderItem={({item}) => (
                 <View style={styles.comment}>
                     <View style={styles.header}>
+                      <Image style={styles.item_img} source={{uri: item.author.photo}}/>
                       <View style={styles.header_colum}>
-                        <Text style={styles.item_user}> {item.author}</Text>
-                        <Text>{item.created}</Text>
+                        <Text style={styles.item_user}> {item.author.username}</Text>
+                        <Text style={styles.item_data}>{item.created}</Text>
                       </View>
                       
                     </View>
-                    <Text style={styles.text}>{item.text}</Text>
+
+                    <Text style={styles.text_com}>{item.text}</Text>
                 </View>
                     
                     )}
@@ -192,6 +199,23 @@ const styles = StyleSheet.create({
 
   },
 
+  rec_one:{
+    marginTop: -20,
+    backgroundColor: "#F5F5F5",
+    width: 390,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    flexWrap: "wrap"
+  },
+
+  item_data:{
+    color: "#A3A6AA",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 14,
+    lineHeight:19,
+
+  },
 
   btn_send:{
     width:40,
@@ -226,7 +250,6 @@ const styles = StyleSheet.create({
 },
   post:{
     paddingTop: 8,
-    marginTop: 8,
     backgroundColor: "#fff",
   },
   put_txt:{
@@ -249,14 +272,16 @@ const styles = StyleSheet.create({
   comment:{
     marginBottom: 8,
     borderRadius: 18,
-    width: 390,
+    width: 358,
+    marginLeft: 16,
     backgroundColor: '#fff'
+
   },
 
   post_img:{
     paddingTop:0,
     width:390,
-    height:250,
+    height:350,
   },
 
   post_user_img:{
@@ -267,6 +292,16 @@ const styles = StyleSheet.create({
     marginLeft:16,
     borderWidth: 1,
     borderColor: '#F9B924'
+  },
+  item_img:{
+    width:45,
+    height:45,
+    alignItems: "flex-start",
+    borderRadius: 25,
+    marginLeft:16,
+    borderWidth: 1,
+    borderColor: "#f9b924",
+    marginTop: 8,
   },
 
   header:{
@@ -282,13 +317,27 @@ const styles = StyleSheet.create({
     marginLeft:16,
   },
 
-  item_user:{
+  header_column:{
+    marginTop: 16,
+    display: "flex",
+    flexDirection: "column",
+    marginLeft:16,
+  },
+
+  item_user_header:{
     fontStyle: "normal",
     fontWeight: 400,
     fontSize: 18,
   },
+  item_user:{
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 18,
+    marginTop: 16,
+    marginLeft: 16
+  },
 
-  item_data:{
+  item_data_header:{
     color: "#A3A6AA",
     fontStyle: "normal",
     fontWeight: 400,
@@ -296,9 +345,18 @@ const styles = StyleSheet.create({
     lineHeight:19,
 
   },
+  item_data:{
+    color: "#A3A6AA",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 16,
+    lineHeight:19,
+    marginLeft: 16
+
+  },
   text:{
     width: 358,
-    marginLeft: 16,
+    marginLeft: 32,
     marginTop:16,
     marginBottom: 16,
     fontStyle: "normal",
@@ -307,9 +365,20 @@ const styles = StyleSheet.create({
     alignSelf:'center'
 
   },
+
+  text_com:{
+    width: 358,
+    marginLeft: 32,
+    marginTop:16,
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 18,
+    alignSelf:'center'
+
+  },
   title:{
     marginLeft: 16,
-    marginTop:16,
+    marginTop:21,
     fontStyle: "normal",
     fontWeight: 400,
     fontSize: 20,
@@ -328,14 +397,12 @@ const styles = StyleSheet.create({
   },
 
   line:{
-    backgroundColor: "#F9B924",
     width: 390,
-    height: 1,
     marginBottom: 16,
   },
 
   list:{
-    paddingBottom: 40,
+    marginBottom: 159,
   }
 
 

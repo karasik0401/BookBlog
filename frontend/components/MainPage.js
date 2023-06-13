@@ -3,6 +3,8 @@ import { Stack, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import filter from 'lodash.filter'
+import { Feather, Entypo } from "@expo/vector-icons";
+
 import { useIsFocused } from "@react-navigation/native";
 import {API_URL} from "@env";
 
@@ -72,22 +74,24 @@ function MainPage(props) {
   return (
     <View style={styles.container}>
       <SafeAreaView >
-        <TextInput placeholder='seach' clearButtonMode='always'
+      <Feather
+          name="search"
+          size={20}
+          color='#ccc'
+          style={{ marginLeft: 6,
+          marginBottom: -35,
+          marginTop: 16,
+          zIndex: 1, }}
+        />
+        <TextInput placeholder='Поиск' clearButtonMode='always'
                    style={styles.search}
                    autoCapitalize="none"
                    autoCorrect={false}
-                   value={searchQuery} onChangeText={(query) => handleSearch(query)}/>
+                   value={searchQuery} onChangeText={(query) => handleSearch(query)}
+                   />
       </SafeAreaView>
 
-      <Button 
-              title="в профиль"
-              color="#f9b924"
-              size="sm"
-              onPress={() => navigation.navigate('Profile')}
-            />
-
-
-        <FlatList style={styles.list}
+        <FlatList showsVerticalScrollIndicator={false} style={styles.list}
               data={data}
               key={(item) => item}
               renderItem={({item}) => (
@@ -164,12 +168,16 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor: '#ccc',
     borderRadius:10,
-    marginTop:16,
+    marginTop:8,
+    marginBottom: 8,
     alignItems:"center",
+    backgroundColor: "#fff",
+    paddingLeft: 25,
+
   },
   list:{
-    width:390,
-    marginTop:0,
+    marginBottom: 50,
+    width: 390,
   },
 
   items:{
@@ -177,6 +185,9 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     marginTop:8,
     backgroundColor: '#fff',
+    borderRadius: 20,
+    marginLeft: 16,
+    marginRight: 16, 
   },
 
   header:{
@@ -226,6 +237,7 @@ const styles = StyleSheet.create({
 
   }
 
+  
 
 
 

@@ -24,18 +24,10 @@ function MainStackNavigator(props) {
     <NavigationContainer>
       <Stack.Navigator screenOptions={({ navigation }) => ({
           headerRight: () => (
-      <Button
-        onPress={() => navigation.navigate('Profile')}
-        title="главная"
-        color="#fff"
-      />
+            <IconButton  onPress={() => navigation.navigate('Profile')} icon={props => <Icon name="account" {...props} color="#fff"/>} />
     ),
     headerLeft: () => (
-      <Button
-        onPress={() => navigation.navigate('Camera')}
-        title="главная"
-        color="#fff"
-      />
+      <IconButton  onPress={() => navigation.navigate('Camera')} icon={props => <Icon name="plus" {...props} color="#fff"/>} />
     )
       }
       )}
@@ -44,6 +36,7 @@ function MainStackNavigator(props) {
           name='Sign_up'
           component={Sign_up}
           options={{title: ' ',
+          headerShown: false,
           headerLeft: () => null,}}
           
         />
@@ -51,13 +44,13 @@ function MainStackNavigator(props) {
           name='Sign_in'
           component={Sign_in}
           options={{title: ' ',
+          headerShown: false,
           headerLeft: () => null,}}
         />
 
         <Stack.Screen
           name='MainPage'
           component={MainPage}
-          
           options={{title: 'Главная',
             headerStyle: {
             backgroundColor: '#F9B924'},
@@ -74,7 +67,7 @@ function MainStackNavigator(props) {
           name='HumanPosts'
           component={HumanPosts}
           
-          options={{title: '',
+          options={{title: 'Мои обсуждения',
             headerStyle: {
             backgroundColor: '#F9B924'},
               headerTintColor: '#fff',
@@ -89,7 +82,7 @@ function MainStackNavigator(props) {
           <Stack.Screen
           name='Camera'
           component={Camera}
-          options={{title: 'новое обсуждение',
+          options={{title: 'Новое обсуждение',
           headerLeft: () => null,
             headerStyle: {
             backgroundColor: '#F9B924'},
@@ -117,8 +110,9 @@ function MainStackNavigator(props) {
           component={Profile}
           options={{title: 'Профиль',
           headerRight: () => null,
+          headerShown: false,
             headerStyle: {
-            backgroundColor: '#F9B924'},
+            backgroundColor: 'null'},
               headerTintColor: '#fff',
               headerTitleStyle: {
               fontWeight: 'bold',

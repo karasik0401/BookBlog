@@ -121,6 +121,7 @@ function Camera(props) {
             style={styles.text}
             editable
             enablesReturnKeyAutomatically = "true"
+            underlineColorAndroid={'transparent'}
             multiline
             onChange={e => onChangeInput(e, "text")}
             placeholder="Что хотите обсудить?"
@@ -160,7 +161,6 @@ function Camera(props) {
 const styles = StyleSheet.create({
   screen: {
     display: 'flex',
-    backgroundColor: '#fff',
     flexDirection: 'column',  
     height: 844,
     },
@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 22,
     letterSpacing: 3,
+
   },
 
   btn:{

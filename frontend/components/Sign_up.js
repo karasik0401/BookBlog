@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     
   },
   text: {
-    marginTop: -130,
+    marginTop: 130,
     fontSize: 32,
     color: '#f9b924',
   },

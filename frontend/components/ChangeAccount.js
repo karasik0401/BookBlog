@@ -102,7 +102,8 @@ function ChangeAccount(props){
 
 
     return(
-        <View>
+        <View style={styles.container}>
+          <ScrollView showsVerticalScrollIndicator={false} style={styles.body}>
             {
               pickedImagePath !== ''? <Image
                 source={{ uri: pickedImagePath }}
@@ -114,30 +115,75 @@ function ChangeAccount(props){
               )
             }
 
-            <IconButton onPress={showImagePicker} icon={props => <Icon name="plus" {...props} color="#f9b924"/>} />
-            
-            <Pressable style={styles.btn} onPress={handleSubmit}>
-                <Text style={styles.btn_text}>Изменить </Text>
+        <View style={styles.rec_t}>
+          <Pressable style={styles.btn_icon} onPress={showImagePicker}>
+            <Text style={styles.btn_icon}>Изменить фото</Text>
             </Pressable>
 
+          <Pressable style={styles.btn} onPress={handleSubmit}>
+            <Text style={styles.btn_text}>Coхранить </Text>
+          </Pressable>         
         </View>
+        </ScrollView>
+      </View>
     )
 
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 844,
+  }, 
+  
   screen: {
     display: 'flex',
     backgroundColor: '#fff', },
   btn: {
     marginTop: 27,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 318,
+    alignSelf: "center",
+    width: 150,
     height: 52,
     borderRadius: 10,
     backgroundColor: '#f9b924',
-    marginLeft:12
+  },
+
+  rec_t:{
+    marginTop: -50,
+    width: 390,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    height: 324,
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'center'
+  },
+
+  btn_text:{
+    fontFamily: 'Inter',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: 20,
+    alignSelf: "center",
+    color: "#fff",
+    marginTop: 12,
+  },
+
+  btn_icon:{
+    fontFamily: 'Inter',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: 20,
+    lineHeight: 31,
+    marginBottom:8,
+    alignSelf: "center",
+    color: "#A3A6AA",
+    marginTop: -60,
   },
   text:{
     marginTop: 16,
@@ -152,8 +198,8 @@ const styles = StyleSheet.create({
     gap: 16
   },
   img: {
-    width: 90,
-    height: 90,
+    width:390,
+    height: 481,
     resizeMode: 'cover'
   }
 });
